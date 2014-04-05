@@ -5,7 +5,8 @@
 void main()
 {
 
-    int i,val=-1,choice,choice_id,num_domains;
+    int i,val=-1,choice,num_domains;
+    char name[10];
     int *active_domains;
     virConnectPtr conn;
     virDomainPtr vdp;
@@ -37,14 +38,14 @@ void main()
             scanf("%d",&choice);
 
 	    if(choice==4)
-	    	exit();
+	    	exit(0);
 	    else
 	   {
-            printf("\n Please Insert the Active Domian ID ");
-            scanf("%d",&choice_id);
+            printf("\n Please Insert the Domain Name ");
+            scanf("%s",&name);
 	   
   
-            vdp=virDomainLookupById(conn,choice_id);
+            vdp=virDomainLookupByName(conn,name);
         
             switch(choice)
             {
@@ -69,6 +70,15 @@ val=virDomainResume(vdp);
                         else
                             printf("Failed");
                         break;
+                        
+                 case 4: /* stop */
+val=virDomainShutdown(vdp);
+                          if(val==0)
+                              printf("Success");
+                          else
+                              printf("Failed");
+                          break;
+
 
             
                 default:
